@@ -44,4 +44,20 @@ class ZeeDropshipping{
             throw new \Exception($data->message);
         }
     }
+    
+
+    public function dashboard(){
+        $auth = auth()->user()->stores()->first();
+        $response = $this->http->get('dashboard', [
+            'headers' => [
+                'Authorization' => 'Bearer '.$auth->api_key
+            ],
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        if($response->getStatusCode() == 200){
+            return $data;
+        }else{
+            throw new \Exception($data->message);
+        }
+    }
 }

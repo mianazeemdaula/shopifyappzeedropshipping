@@ -76,6 +76,10 @@ class ExportOrders extends Component
                     }, $order['line_items'])
                 ];
             }
+            // dd([
+            //     $zeeorders,
+            //     $store->zeedropshipping_uid,
+            // ]);
             $zee->exportOrders([
                 'orders' => $zeeorders,
                 'user_id' => $store->zeedropshipping_uid

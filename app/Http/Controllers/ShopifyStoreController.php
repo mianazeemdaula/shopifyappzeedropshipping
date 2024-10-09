@@ -12,9 +12,10 @@ class ShopifyStoreController extends Controller
         $user = auth()->user();
         if($user && $user->stores()->count() == 0){
             return view('login');
-            
         }
-        return view('welcome');
+        $zee = new \App\Services\ZeeDropshipping();
+        $data = $zee->dashboard();
+        return view('welcome', compact('data'));
     }
 
     public function exportorders(Request $request)

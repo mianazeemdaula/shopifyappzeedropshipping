@@ -14,5 +14,10 @@ class UserStore extends Model
         'name',
         'api_key',
         'zeedropshipping_uid',
+        'userdata',
+    ];
+
+    protected $casts = [
+        'userdata' => 'array',
     ];
 }

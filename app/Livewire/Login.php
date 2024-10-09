@@ -34,20 +34,44 @@ class Login extends Component
         try {
             $response = $zee->login($this->email, $this->password);
             if($response && $response->user){
+                if($this->user->stores()->count() > 0){
+                    $this->user->stores()->delete();
+                }
                 $this->user->stores()->create([
                     'user_id' => $this->user->id,
                     'name' => $this->user->name,
                     'api_key' => $response->token,
                     'zeedropshipping_uid' => $response->user->id,
+                    'userdata' => json_encode($response->user),
                 ]);
-                return Redirect::tokenRedirect('home');
+                $this->dispatch('refreshpage');
+                // dd(request()->all());
+                // return Redirect::tokenRedirect('home');
+                // return redirect()->tokenRedirect('home', ['host' => request()->input('host')]);
             }else{
                 return redirect()->back()->with('error', $response->message);
             }
         } catch (\Throwable $th) {
+            if($this->parseRes($th->getMessage())){
+                return redirect()->back()->with('error', $this->parseRes($th->getMessage()));
+            }
             return redirect()->back()->with('error', $th->getMessage());
         }finally{
             $loading = false;
         }
+    }
+
+    private function parseRes($string){
+        $matches = array();
+        preg_match('/\{.*\}/', $string, $matches);
+        if (isset($matches[0])) {
+            $jsonString = $matches[0];
+            $responseData = json_decode($jsonString, true);
+            // Check if the "message" key exists and get its value
+            if (isset($responseData['message'])) {
+                return $responseData['message'];
+            }
+        }
+        return null;
     }
 }
