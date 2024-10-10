@@ -12,19 +12,17 @@
                 </h1>
                 <div class="grid gap-4 grid-cols-2 ">
                     @foreach ($data as $key => $item)
-                        @if ($item)
-                            <div class="bg-gray-100 p-4 rounded-lg">
-                                <div class="text-center flex items-center justify-between">
-                                    <div>
-                                        <h1 class="text-base font-semibold uppercase text-red-500">{{ $key }}
-                                        </h1>
-                                    </div>
-                                    <div class="my-4">
-                                        <h1 class="text-base font-bold">{{ $item }}</h1>
-                                    </div>
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <div class="text-center flex items-center justify-between">
+                                <div>
+                                    <h1 class="text-base font-semibold uppercase text-red-500">{{ $key }}
+                                    </h1>
+                                </div>
+                                <div class="my-4">
+                                    <h1 class="text-base font-bold">{{ $item }}</h1>
                                 </div>
                             </div>
-                        @endif
+                        </div>
                     @endforeach
                 </div>
             </div>
