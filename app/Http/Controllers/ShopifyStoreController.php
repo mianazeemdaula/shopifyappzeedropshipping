@@ -20,7 +20,7 @@ class ShopifyStoreController extends Controller
 
     public function exportorders(Request $request)
     {
-        $shop = auth()->user();
+        $shop = $request->user();
         $ids = is_array($request->ids) ?  implode(',',$request->ids) : [$request->ids];
         $data =  $shop->api()->rest('GET', '/admin/api/2024-07/orders.json', ['ids' => $ids,'status' => 'any']);
         if(isset($data['status']) &&  $data['status'] == 200){
@@ -29,6 +29,6 @@ class ShopifyStoreController extends Controller
             $orders = json_decode($orders, true);
             return view('export-orders', compact('orders'));
         }
-        return "Error";
+        return redirect()->route('home')->with('error', 'Failed to fetch orders');
     }
 }

@@ -1,0 +1,31 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "af3e81d8df85f16c7c1942c27cdce6e1"
+name = "ZeeDropShipping"
+handle = "zeedropshipping"
+application_url = "https://app.zeedropshipping.com/"
+embedded = true
+
+[build]
+include_config_on_deploy = true
+
+[auth]
+redirect_urls = [ "https://app.zeedropshipping.com/authenticate" ]
+
+[webhooks]
+api_version = "2024-04"
+
+  [[webhooks.subscriptions]]
+  uri = "/app/customer/data"
+  compliance_topics = [ "customers/data_request" ]
+
+  [[webhooks.subscriptions]]
+  uri = "/app/customer/erasure"
+  compliance_topics = [ "customers/redact" ]
+
+  [[webhooks.subscriptions]]
+  uri = "/app/shop/erasure"
+  compliance_topics = [ "shop/redact" ]
+
+[pos]
+embedded = false

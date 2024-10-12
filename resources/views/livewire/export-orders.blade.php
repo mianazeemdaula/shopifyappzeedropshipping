@@ -21,7 +21,7 @@
                     </td>
                     <td scope="col" class="px-2 py-2 text-left font-normal text-gray-700">Order ID</td>
                     <td scope="col" class="px-2 py-2 text-left font-normal text-gray-700">Order Date</td>
-                    <td scope="col" class="px-2 py-2 text-left font-normal text-gray-700">Customer Name</td>
+                    {{-- <td scope="col" class="px-2 py-2 text-left font-normal text-gray-700">Customer Name</td> --}}
                     <td scope="col" class="px-2 py-2 text-left font-normal text-gray-700">City</td>
                     <td scope="col" class="px-2 py-2 text-left font-normal text-gray-700"># Products</td>
                     <td scope="col" class="px-2 py-2 text-left font-normal text-gray-700">Total</td>
@@ -36,8 +36,8 @@
                         <td class="whitespace-nowrap px-1 py-4 text-sm">{{ $order['id'] }}</td>
                         <td class="whitespace-nowrap px-1 py-4 text-sm">{{ Carbon\Carbon::parse($order['created_at']) }}
                         </td>
-                        <td class="whitespace-nowrap px-1 py-4 text-sm">{{ $order['customer']['first_name'] }}
-                            {{ $order['customer']['last_name'] }}</td>
+                        {{-- <td class="whitespace-nowrap px-1 py-4 text-sm">{{ $order['customer']['first_name'] }}
+                            {{ $order['customer']['last_name'] }}</td> --}}
                         <td class="whitespace-nowrap px-1 py-4 text-sm">{{ $order['shipping_address']['city'] }}</td>
                         <td class="whitespace-nowrap px-1 py-4 text-sm">{{ count($order['line_items']) }}</td>
                         <td class="whitespace-nowrap px-1 py-4 text-sm">{{ $order['total_price'] }}</td>

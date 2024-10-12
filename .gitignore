@@ -4,6 +4,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/appext/node_modules
 .env
 .env.backup
 .env.production
