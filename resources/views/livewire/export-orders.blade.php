@@ -7,6 +7,13 @@
                 <span class="block sm:inline">Orders have been sent to Zeedropshipping</span>
             </div>
         @endif
+
+        @if ($errorMessage)
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">Error!</strong>
+                <span class="block sm:inline">{{ $errorMessage }}</span>
+            </div>
+        @endif
         <div class="my-2">
             <h1 class="text-lg font-bold">Export Orders</h1>
             <p>
@@ -38,7 +45,8 @@
                         </td>
                         {{-- <td class="whitespace-nowrap px-1 py-4 text-sm">{{ $order['customer']['first_name'] }}
                             {{ $order['customer']['last_name'] }}</td> --}}
-                        <td class="whitespace-nowrap px-1 py-4 text-sm">{{ $order['shipping_address']['city'] }}</td>
+                        <td class="whitespace-nowrap px-1 py-4 text-sm">
+                            {{ $order['shipping_address']['city'] ?? 'N/A' }}</td>
                         <td class="whitespace-nowrap px-1 py-4 text-sm">{{ count($order['line_items']) }}</td>
                         <td class="whitespace-nowrap px-1 py-4 text-sm">{{ $order['total_price'] }}</td>
                     </tr>

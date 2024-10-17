@@ -15,6 +15,14 @@
         @yield('content')
     </main>
     @livewireScripts
+
+    <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('refreshpage', (event) => {
+                location.reload();
+            });
+        });
+    </script>
 </body>
 
 </html>

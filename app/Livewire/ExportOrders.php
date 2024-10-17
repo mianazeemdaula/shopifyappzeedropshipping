@@ -12,6 +12,8 @@ class ExportOrders extends Component
     public $orders;
     public $ordersSent = false;
 
+    public $errorMessage;
+
     public function mount($orders)
     {
         $this->orders = $orders;
@@ -46,6 +48,7 @@ class ExportOrders extends Component
     public function exportToZeedropshipping()
     {
         try {
+            $this->errorMessage = null;
             $zee = new \App\Services\ZeeDropshipping();
             $store = UserStore::where('name', $this->user->name)->first();
             // get selected orders with manually keys
@@ -54,6 +57,10 @@ class ExportOrders extends Component
             });
             $zeeorders = [];
             foreach ($selectedOrders as $order) {
+                if($order['customer'] == null){
+                    $this->errorMessage = 'Customer information is missing for order ' . $order['id']; 
+                    return;
+                }
                 $zeeorders[] = [
                     'id' => $order['id'],
                     'customer_name' => $order['customer']['first_name']. " " . $order['customer']['last_name'],
@@ -76,10 +83,6 @@ class ExportOrders extends Component
                     }, $order['line_items'])
                 ];
             }
-            // dd([
-            //     $zeeorders,
-            //     $store->zeedropshipping_uid,
-            // ]);
             $zee->exportOrders([
                 'orders' => $zeeorders,
                 'user_id' => $store->zeedropshipping_uid
@@ -88,34 +91,7 @@ class ExportOrders extends Component
             // clear selected orders
             $this->selected = [];
         } catch (\Throwable $th) {
-            dd($th->getMessage());
+            $this->errorMessage = $th->getMessage();
         }
-        /**
-         * total_price: "457924702",
-         * email: "",
-         * name: "#1002",
-         * note: "",
-         * shipping_address: {
-         * first_name: "John",
-         * last_name: "Smith",
-         * zip: "K1M 1M4",
-         * address1: "123 Main St",
-         * 'city': 'Ottawa',
-         * 'phone': '555-555-5555',}
-         * customer: {
-         * first_name: "John",
-         * last_name: "Smith",
-         * phone: "555-555-5555",
-         * email: "",
-         * }
-         * line_items: [
-         *     {
-         *        id: 395331779,
-         *       current_quantity: 1,
-         *      price: 457924702,
-         *    sku: 632910392,
-         * }
-         * ]
-         */
     }
 }

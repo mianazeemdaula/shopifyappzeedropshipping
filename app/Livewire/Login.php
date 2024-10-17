@@ -12,6 +12,7 @@ class Login extends Component
     public $user;
 
     public $loading = false;
+    public $error;
 
     public function mount()
     {
@@ -23,13 +24,16 @@ class Login extends Component
         return view('livewire.login');
     }
 
+    protected $rules = [
+        'email' => 'required|email',
+        'password' => 'required|min:6'
+    ];
+
     public function login()
     {
-        $this->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6'
-        ]);
+        $this->validate();
         $loading = true;
+        $this->error = null;
         $zee = new \App\Services\ZeeDropshipping();
         try {
             $response = $zee->login($this->email, $this->password);
@@ -45,17 +49,18 @@ class Login extends Component
                     'userdata' => json_encode($response->user),
                 ]);
                 $this->dispatch('refreshpage');
-                // dd(request()->all());
-                // return Redirect::tokenRedirect('home');
-                // return redirect()->tokenRedirect('home', ['host' => request()->input('host')]);
             }else{
-                return redirect()->back()->with('error', $response->message);
+                $this->error = $response->message;
+                // return redirect()->back()->with('error', $response->message);
             }
         } catch (\Throwable $th) {
+            $msg = 'Failed to login';
             if($this->parseRes($th->getMessage())){
-                return redirect()->back()->with('error', $this->parseRes($th->getMessage()));
+                // return redirect()->back()->with('error', $this->parseRes($th->getMessage()));
+                $msg = $this->parseRes($th->getMessage());
             }
-            return redirect()->back()->with('error', $th->getMessage());
+            $this->error = $msg;
+            // return redirect()->back()->with('error', $th->getMessage());
         }finally{
             $loading = false;
         }
