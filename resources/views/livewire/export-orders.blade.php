@@ -16,9 +16,15 @@
         @endif
         <div class="my-2">
             <h1 class="text-lg font-bold">Export Orders</h1>
-            <p>
-                Select the orders you want to export to Zeedropshipping
-            </p>
+            <div>
+                This page allows you to export orders to Zeedropshipping. Orders that have been exported will be
+                automatically fulfilled by Zeedropshipping. Only orders that have complete required information will
+                show here.
+            </div>
+            <div>
+                Select the orders you want to export to Zeedropshipping. Once you have selected the orders, click the
+                export button.
+            </div>
         </div>
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
