@@ -29,11 +29,11 @@ class ShopifyStoreController extends Controller
         $ids = is_array($request->ids) ?  implode(',',$request->ids) : [$request->ids];
         
         $data =  $shop->api()->rest('GET', '/admin/api/2024-10/orders.json', ['ids' => $ids, 'status' => 'any']);
-        dd([
-            'ids' => $ids,
-            'count' => count($data['body']['orders']),
-            'orders' => $data['body']['orders']
-        ]);
+        // dd([
+        //     'ids' => $ids,
+        //     'count' => count($data['body']['orders']),
+        //     'orders' => $data['body']['orders']
+        // ]);
         if(isset($data['status']) &&  $data['status'] == 200){
             $orders =  $data['body']['orders'];
             $orders = json_encode($orders);
