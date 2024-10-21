@@ -25,6 +25,9 @@ class ShopifyStoreController extends Controller
     public function exportorders(Request $request)
     {
         $shop = $request->user();
+        dd(
+            $request->ids
+        );
         $ids = is_array($request->ids) ?  implode(',',$request->ids) : [$request->ids];
         $data =  $shop->api()->rest('GET', '/admin/api/2024-07/orders.json', ['ids' => $ids,'status' => 'any']);
         dd([
