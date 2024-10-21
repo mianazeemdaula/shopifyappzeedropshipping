@@ -30,7 +30,7 @@ class ShopifyStoreController extends Controller
         dd(
             $ids
         );
-        $data =  $shop->api()->rest('GET', '/admin/api/2024-07/orders.json', ['ids' => $ids,'status' => 'any']);
+        $data =  $shop->api()->rest('GET', '/admin/api/2024-04/orders.json', ['ids' => $ids]);
         dd([
             'count' => count($data['body']['orders']),
             'orders' => $data['body']['orders']
