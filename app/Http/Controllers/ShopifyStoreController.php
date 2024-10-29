@@ -19,6 +19,10 @@ class ShopifyStoreController extends Controller
             $user->stores()->delete();
             return view('login');
         }
+        $shopdata =  request()->user()->api()->rest('GET', '/admin/api/2024-10/shop.json');
+        if($shopdata['body']['container']['shop']['country_code'] != 'PK'){
+            return view('unsupported');
+        }
         return view('welcome', compact('data'));
     }
 
@@ -27,6 +31,8 @@ class ShopifyStoreController extends Controller
         $shop = $request->user();
         
         $ids = is_array($request->ids) ?  implode(',',$request->ids) : [$request->ids];
+        // $data =  $shop->api()->rest('GET', '/admin/api/2024-10/shop.json');
+        // dd($data);
         
         $data =  $shop->api()->rest('GET', '/admin/api/2024-10/orders.json', ['ids' => $ids, 'status' => 'any']);
         // dd([
