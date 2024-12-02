@@ -23,6 +23,18 @@
             });
         });
     </script>
+
+    <script>
+        var AppBridge = window['app-bridge'];
+        var actions = AppBridge.actions;
+        var TitleBar = actions.TitleBar;
+        var Button = actions.Button;
+        var Redirect = actions.Redirect;
+        var titleBarOptions = {
+            title: 'Login',
+        };
+        var myTitleBar = TitleBar.create(app, titleBarOptions);
+    </script>
 </body>
 
 </html>
